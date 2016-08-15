@@ -1,0 +1,255 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+public class GenerateExtentReport {
+	
+	 ExtentReports extent;
+	 static ExtentTest test;
+	 XSSFSheet sheet1, sheet2, sheet3;
+	
+	@BeforeTest
+	public void startReport(){
+		
+		extent = new ExtentReports(System.getProperty("user.dir") + "/test-output/MyOwnReport.html", true);
+		extent.addSystemInfo("HostName", "Benjamin")
+		.addSystemInfo("Environment", "QA")
+		.addSystemInfo("UserName", "Benjamin Saint Elien");
+		extent.loadConfig(new File(System.getProperty("user.dir")+"/extent-config.xml"));
+		
+	}
+		
+	@Test
+	public void searchResults(){
+		
+		test = extent.startTest("Search results on Amazon.com");
+		Assert.assertTrue(true);
+		test.log(LogStatus.INFO, "30,513,903 results for Electronics: 'Samsung' ");
+		
+		//Star rating search results
+		
+		test.log(LogStatus.INFO, "Avg. Customer Review- * * * * & Up (431,050) ");
+		test.log(LogStatus.INFO, "Avg. Customer Review- * * * & Up (590,322) ");
+		test.log(LogStatus.INFO, "Avg. Customer Review- * * & Up (642,257) ");
+		test.log(LogStatus.INFO, "Avg. Customer Review- * & Up (698,316)");
+		
+		//Product and price information
+		
+		test.log(LogStatus.INFO, "Samsung Galaxy Note 7 N930FD DUAL SIM Factory Unlocked Smartphone International Version No Warranty - 64GB (Blue) ");
+		test.log(LogStatus.INFO, "Price: $959.00 & FREE Shipping ");
+		test.log(LogStatus.INFO, "There are no customer reviews yet. This item has not been released yet and is not eligible to be reviewed. ");
+		
+		//Product information and customer reviews
+		
+		test.log(LogStatus.INFO, "Samsung Galaxy Tab E 9.6 16 GB Wifi (Black)"); 
+		test.log(LogStatus.INFO, "Price: $189.00 & FREE Shipping ");
+		test.log(LogStatus.INFO, "Customer Review-  'Great big screen budget friendly tablet.' - By  marshalmeg on January 17, 2016 Style Name: Tablet - The Galaxy Tab E is just what I wanted in a large screen tablet for my everyday use that was not very expensive but still perfectly capable. ");
+		test.log(LogStatus.INFO, "Customer Review-  'A superb general-use tablet' - By  John S. on December 26, 2015 Style Name: Tablet - Please take my review with a grain of salt; this is my first tablet of my own.I've had this tablet for about a week and a half at the time of this review. My purpose for purchasing it was to have a convenient device for college use, and, I'm not going to lie, to have some fun with it by watching videos and listening to music. For the price, it's everthing I could have hoped for. ");
+		test.log(LogStatus.INFO, "Customer Review-  'Great value for the price' - By  Lakiky18 on January 11, 2016 Style Name: Tablet - I really like this tablet, Is very good looking, the design is very sleek and stylish. ");
+		test.log(LogStatus.INFO, "Customer Review-  'Fantastic tablet' -  By  DeeAnn S. on February 11, 2016 Style Name: Tablet - This is my second Samsung tablet and I just love it. ");
+		test.log(LogStatus.INFO, "Customer Review-  'Very Nice, quite happy with it.' - By Lanceon August 13, 2016 Style Name: Tablet Verified Purchase - The one I got was refurbished, great price, has a few scratches on the back but otherwise fine.");
+		test.log(LogStatus.INFO, "Customer Review-  'Very happy with this purchase' - By Amazon Customer on August 13, 2016 Style Name: Tablet Verified Purchase - Very happy with this purchase. I primarily used the tablet to check email, surf the Internet and read an E newspaper etc. For these uses and the price of the tablet it works well.");
+	}
+	
+	@Test
+	public void searchResults2(){
+		
+	  Assert.assertTrue(true);
+	  
+	  //Star rating search results
+	  
+	  test.log(LogStatus.INFO, "489,374 results for Electronics: 'Samsung TV' ");
+	  test.log(LogStatus.INFO, "Avg. Customer Review- * * * * & Up (443)");
+	  test.log(LogStatus.INFO, "Avg. Customer Review- * * * & Up (592)");
+	  test.log(LogStatus.INFO, "Avg. Customer Review- * * & Up (613)");
+	  test.log(LogStatus.INFO, "Avg. Customer Review- * & Up (621)");
+	  
+	  //Product information and customer reviews
+	  
+	  test.log(LogStatus.INFO, "Samsung UN48J5000 48-Inch 1080p LED TV (2015 Model) ");
+	  test.log(LogStatus.INFO, "Customer Review- 'A modestly priced but good TV.' By John Bertelli on June 14, 2015 Style Name: TVSize: 32-Inch Verified Purchase Good basic TV. Picture is crisp and clear. It's not a smart TV, I knew that going in. I wanted a good plain Jane TV because I have an Amazon Fire Stick and a Playstation console to provide all the smart features.");
+	  test.log(LogStatus.INFO, "Customer Review- 'Great value' By Johnny Dancing on October 13, 2015 Style Name: TVSize: 32-Inch Verified Purchase Nice TV at a nice price as long as you don't need the smart TV bell and whistles.");
+	  test.log(LogStatus.INFO, "Customer Review- 'I like this TV' By Erica M. on July 23, 2015 Style Name: TVSize: 32-Inch I like this TV. We have a 55 inch Samsung in our living room and wanted a TV for our bedroom. I read the reviews and couldn't beat the price. Picture is great, sound is what I expect it to be for a small, flat screen TV.");
+	  test.log(LogStatus.INFO, " Product Features - Refresh Rate: 60CMR (Effective) Backlight: LEDSmart Functionality: No Dimensions (W x H x D): TV w/stand: 43.3in x 27.4in x 12.2in, TV w/o stand: 43.3in x 24.8in x 2.4in Inputs: 2 HDMI, 1 USB");
+	  test.log(LogStatus.INFO, "Samsung UN50KU6300 50-Inch 4K Ultra HD Smart LED TV (2016 Model) ");
+	  test.log(LogStatus.INFO, "Price: $698.90 & FREE Shipping ");
+	  
+	}
+	
+	@Test
+	public void searchResults3(){
+		
+		Assert.assertTrue(true);
+		
+		test.log(LogStatus.INFO, "124 results for Electronics: Television & Video: Televisions: 60Hz: 'Samsung TV' ");
+		
+		//Product and price information
+		
+		test.log(LogStatus.INFO, "Samsung UN40F5500 40-Inch 1080p 60Hz Slim Smart LED HDTV (2013 Model) ");
+		test.log(LogStatus.INFO, "2 used from $379.94");
+		
+		//Product and price information
+		
+		test.log(LogStatus.INFO, "Samsung UN22F5000 22-Inch 1080p 60Hz LED HDTV (2013 Model) ");
+		test.log(LogStatus.INFO, "1 used from $204.80 - 1 refurbished from $500.00");
+	}
+	
+	@Test
+	public void searchResults4(){
+		
+		Assert.assertTrue(true);
+		
+		//Search results
+		
+		test.log(LogStatus.INFO, "139 results for Electronics: Television & Video: Televisions: 120 Hz: 'Samsung TV' ");
+		
+		//Product and price information
+		
+		test.log(LogStatus.INFO, "Samsung UN50KU6300 50-Inch 4K Ultra HD Smart LED TV (2016 Model) ");
+		test.log(LogStatus.INFO, " 1 new from $750.93 - 1 refurbished from $582.99");
+		
+		//Product and price information
+		
+		test.log(LogStatus.INFO, "Samsung UN55KU6300 55-Inch 4K Ultra HD Smart LED TV (2016 Model)");
+		test.log(LogStatus.INFO, " Price: $797.99 & FREE Shipping. ");
+	}
+	
+	@Test
+	public void searchResults5(){
+		
+		Assert.assertTrue(true);
+		
+		//Search results
+		
+		test.log(LogStatus.INFO, "506 results for Electronics: Television & Video: Televisions: 1080p: 'Samsung TV'  ");
+		
+		//Products and price information
+		
+		test.log(LogStatus.INFO, "Samsung UN40J5200 40-Inch 1080p Smart LED TV (2015 Model) ");
+		test.log(LogStatus.INFO, "13 used from $240.00 1 refurbished from $420.99");
+		
+		test.log(LogStatus.INFO, "Samsung UN32J5003 32-Inch 1080p LED TV (2015 Model) ");
+		test.log(LogStatus.INFO, " 16 used from $173.24 1 refurbished from $265.00");
+	}
+					
+	@AfterMethod
+	public void getResult(ITestResult result){
+		
+		if(result.getStatus()==ITestResult.FAILURE)
+			test.log(LogStatus.FAIL, result.getThrowable());
+		
+		extent.endTest(test);
+	}
+	
+	@AfterTest
+	public void endReport(){
+		
+		extent.flush();
+		extent.close();
+	}
+	
+	public static void main(String[] args) throws IOException {
+		
+		//Accessing excel file for parameterization    
+		
+		File src = new File("C:\\Users\\Benjamin\\Documents\\Parameterization\\AutomationInput.xlsx");
+		
+		//Creating objects to use functions provided from the Apache POI jar file.
+		
+		FileInputStream fis = new FileInputStream(src);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);	
+		XSSFSheet sheet1, sheet2, sheet3;
+		
+		//Setting up internet explorer driver.
+		
+		File file = new File("C:\\Users\\Benjamin\\AppData\\Local\\Temp\\Temp9_IEDriverServer_x64_2.53.1.zip\\IEDriverServer.exe");
+		System.setProperty("webdriver.ie.driver", file.getAbsolutePath());
+		WebDriver driver = new InternetExplorerDriver();
+
+		//Access to the Amazon.com web-site
+		
+		driver.get("http://www.amazon.com");
+		
+		//Selected electronics from the drop down menu
+		
+		driver.findElement(By.cssSelector("option[value = 'search-alias=electronics']")).click();
+		
+		
+		//User web-site navigation
+		
+		driver.findElement(By.name("field-keywords")).sendKeys("Samsung");			
+		driver.findElement(By.xpath("//input[@class= 'nav-input']")).click();
+				
+		driver.findElement(By.id("twotabsearchtextbox")).clear();				
+		driver.findElement(By.name("field-keywords")).sendKeys("Samsung TV");		
+		driver.findElement(By.xpath("//input[@type = 'submit']")).click();
+		
+		
+		//Parameterization input and iterations 
+		
+		//Iteration 1
+		
+		sheet1 = wb.getSheet("sheet1");
+		Iterator<Row> rowIt = sheet1.iterator();
+				
+		while(rowIt.hasNext()){
+		
+		    WebElement element = new WebDriverWait(driver,30).until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[alt= '60 Hz']")));
+
+			driver.findElement(By.xpath("//img[@alt= '60 Hz']")).click();
+			System.out.println(rowIt.next().getCell(0).getStringCellValue());
+			
+		}
+		
+		//Iteration 2
+		
+		sheet2 = wb.getSheet("sheet1");
+		Iterator<Row> rowIt2 = sheet2.iterator();
+		
+		while(rowIt2.hasNext()){
+			
+			WebElement element2 = new WebDriverWait(driver,30).until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[alt= '120 Hz']")));
+			
+			driver.findElement(By.xpath("//img[@alt= '120 Hz']")).click();
+			System.out.println(rowIt2.next().getCell(1).getStringCellValue());
+			
+		}
+		
+		//Iteration 3
+		
+		sheet3 = wb.getSheet("sheet1");
+		Iterator<Row> rowIt3 = sheet3.iterator();
+		
+		while(rowIt3.hasNext()){
+			
+			WebElement element3 = new WebDriverWait(driver,30).until(ExpectedConditions.elementToBeClickable(By.cssSelector("img[alt= '2014']")));
+			
+			driver.findElement(By.xpath("//img[@alt= '1080p']")).click();
+			System.out.println(rowIt3.next().getCell(2).getStringCellValue());
+			
+		}
+	
+	}
+
+}
